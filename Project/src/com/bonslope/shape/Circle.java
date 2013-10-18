@@ -49,7 +49,6 @@ public class Circle extends PCircle {
 				renderable.setPixel(point.getX() + camera.getX(), point.getY() + camera.getY(), colors[new Random().nextInt(colors.length)]);
 			else if(renderable.getPixel(point.getX() + camera.getX(), point.getY() + camera.getY()) == mask)
 				renderable.setPixel(point.getX() + camera.getX(), point.getY() + camera.getY(), colors[new Random().nextInt(colors.length)]);
-			System.out.println(renderable.getHeight());
 			
 			int height = World.REGION_HEIGHT;
 			int solid[] = new int[height];
