@@ -27,6 +27,8 @@ public class Start {
 			
 			temp = ImageIO.read(Start.class.getResource("/icon.png"));
 			
+			// Git Test. askldfjjoarlötjjkiasertpawrpulaserlaöryaåeröåaweyiajweruihaweyuirthayui34895u4,
+			
 		} catch(Exception e) { // In case of failure, shut down program and print error
 			
 			System.err.println("Icon image can't be found.");
