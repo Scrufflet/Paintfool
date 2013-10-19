@@ -6,6 +6,7 @@ import com.bonslope.planned.PRenderable;
 
 public class Region extends PRenderable {
 	
+	private PRenderable backdrop;
 	private PRenderable shadows;
 	
 	private int x, y;
@@ -25,6 +26,7 @@ public class Region extends PRenderable {
 		this.generator = generator;
 		
 		shadows = new PRenderable(getWidth(), getHeight());
+		backdrop = new PRenderable(getWidth(), getHeight());
 		
 		generate();
 		
@@ -35,6 +37,7 @@ public class Region extends PRenderable {
 		generator.generate(x);
 		setPixels(generator.getPixels());
 		shadows.setPixels(generator.getShadows().getPixels());
+		backdrop.setPixels(generator.getBackdrop().getPixels());
 		
 	}
 	
@@ -72,6 +75,9 @@ public class Region extends PRenderable {
 				
 				if(getPixels()[y * getWidth() + x] != 0)
 					renderable.setPixel(pixelX, pixelY, PColor.changeHex(getPixels()[y * getWidth() + x], shadows.getPixels()[y * getWidth() + x]));
+				else if(backdrop.getPixels()[y * getWidth() + x] != 0)
+					renderable.setPixel(pixelX, pixelY, PColor.changeHex(backdrop.getPixels()[y * getWidth() + x], shadows.getPixels()[y * getWidth() + x] - 15));
+					
 				
 				
 			}

@@ -14,6 +14,7 @@ public class Generator extends PRenderable {
 	public static final int SHADOW_MOVE_SIZE = 3;
 	
 	private PRenderable shadows;
+	private PRenderable backdrop;
 	
 	private int[] contour;
 	private int startX;
@@ -33,6 +34,7 @@ public class Generator extends PRenderable {
 			GENERATOR_OFFSET = getHeight() / 2; // Set offset to center of screen to get same amount of sky as ground
 		
 		shadows = new PRenderable(width, height);
+		backdrop = new PRenderable(width, height);
 		
 		contour = new int[width];
 		
@@ -49,6 +51,23 @@ public class Generator extends PRenderable {
 		generateRock();
 		generateGrass();
 		generateShadows();
+		generateBackdrop();
+		
+	}
+	
+	public void generateBackdrop() {
+		
+		for(int x = 0; x < World.REGION_WIDTH; x ++)
+			for(int y = 0; y < World.REGION_HEIGHT; y ++) {
+				
+				Pixel pixel = Pixel.findPixel(getPixel(x, y));
+				
+				if(pixel == Pixel.PIXEL_SOIL)
+					backdrop.setPixel(x, y, Pixel.PIXEL_SOIL.getRandomColor());
+				else if(pixel == Pixel.PIXEL_ROCK)
+					backdrop.setPixel(x, y, Pixel.PIXEL_ROCK.getRandomColor());
+				
+			}
 		
 	}
 	
@@ -111,16 +130,11 @@ public class Generator extends PRenderable {
 	
 	public static void generateShadowColumn(int[] solidColumn, int[] shadowColumn) {
 		
-		boolean setShadows = false;
+		boolean setShadows = true;
 		int move = 0, darkness = 0;
 		int height = shadowColumn.length;
 		
 		for(int y = 0; y < height; y ++) {
-			
-			setShadows = false;
-			
-			if(solidColumn[y] != Pixel.PIXEL_AIR.getFirstColor())
-				setShadows = true;
 			
 			if(setShadows) {
 				
@@ -133,7 +147,8 @@ public class Generator extends PRenderable {
 					
 				}
 				
-				move ++;
+				if(solidColumn[y] != Pixel.PIXEL_AIR.getFirstColor())
+					move ++;
 				
 			}
 			
@@ -206,6 +221,18 @@ public class Generator extends PRenderable {
 	public PRenderable getShadows() {
 		
 		return shadows;
+		
+	}
+	
+	public void setBackdrop(PRenderable backdrop) {
+		
+		this.backdrop = backdrop;
+		
+	}
+	
+	public PRenderable getBackdrop() {
+		
+		return backdrop;
 		
 	}
 	

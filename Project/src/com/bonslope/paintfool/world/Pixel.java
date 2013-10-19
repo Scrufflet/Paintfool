@@ -34,6 +34,17 @@ public class Pixel {
 		
 	}
 	
+	public static Pixel findPixel(int color) {
+		
+		for(Pixel pixel : pixels)
+			for(int i = 0; i < pixel.getColors().length; i ++)
+				if(pixel.getColors()[i] == color)
+					return pixel;
+		
+		return Pixel.PIXEL_AIR;
+		
+	}
+	
 	// Private for every pixel
 	private String name;
 	private int[] colors;
