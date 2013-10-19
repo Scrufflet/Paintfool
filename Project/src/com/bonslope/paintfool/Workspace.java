@@ -42,7 +42,7 @@ public class Workspace extends PWorkspace {
 		
 		camera = new Camera(0, 0);
 		world = new World();
-		brush = new Brush();
+		brush = new Brush(camera);
 		bar = new Bar[] {new Bar(this, brush), new BarArtist(this, brush)};
 		
 		world.init(camera, this);

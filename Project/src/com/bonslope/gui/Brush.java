@@ -1,5 +1,6 @@
 package com.bonslope.gui;
 
+import com.bonslope.paintfool.Camera;
 import com.bonslope.paintfool.Workspace;
 import com.bonslope.paintfool.world.Pixel;
 import com.bonslope.paintfool.world.World;
@@ -29,9 +30,11 @@ public class Brush implements PCActionMouseMotion, PCActionMouse {
 	
 	private Item item = null;
 	
-	public Brush() {
+	private Camera camera;
+	
+	public Brush(Camera camera) {
 		
-		
+		this.camera = camera;
 		
 	}
 	
@@ -57,10 +60,10 @@ public class Brush implements PCActionMouseMotion, PCActionMouse {
 	
 	public void tick() {
 		
-		if(buttonDown == BUTTON_LEFT)
-			filledBrush.render(world, new PCamera(point.getX() - brush.getRadius(), point.getY() - brush.getRadius()), item != null ? item.toPixel().getColors() : Pixel.PIXEL_AIR.getColors(), false, Pixel.PIXEL_AIR.getFirstColor());
-		else if(buttonDown == BUTTON_RIGHT)
-			filledBrush.render(world, new PCamera(point.getX() - brush.getRadius(), point.getY() - brush.getRadius()), Pixel.PIXEL_AIR.getFirstColor(), true, 0);
+		if(buttonDown == BUTTON_LEFT) // Build
+			filledBrush.render(world, camera, new PCamera(point.getX() - brush.getRadius(), point.getY() - brush.getRadius()), item != null ? item.toPixel().getColors() : Pixel.PIXEL_AIR.getColors(), false, Pixel.PIXEL_AIR.getFirstColor());
+		else if(buttonDown == BUTTON_RIGHT) // Destroy
+			filledBrush.render(world, camera, new PCamera(point.getX() - brush.getRadius(), point.getY() - brush.getRadius()), Pixel.PIXEL_AIR.getFirstColor(), true, 0);
 		
 	}
 	

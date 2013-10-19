@@ -2,6 +2,7 @@ package com.bonslope.shape;
 
 import java.util.Random;
 
+import com.bonslope.paintfool.Camera;
 import com.bonslope.paintfool.world.Generator;
 import com.bonslope.paintfool.world.World;
 import com.bonslope.planned.PCamera;
@@ -17,7 +18,7 @@ public class Circle extends PCircle {
 		
 	}
 	
-	public void render(PRenderable renderable, PCamera camera, int color, boolean overwritePixels, int mask) {
+	public void render(PRenderable renderable, Camera realCamera, PCamera camera, int color, boolean overwritePixels, int mask) {
 		
 		for(PPoint point : getPoints()) {
 			
@@ -30,18 +31,18 @@ public class Circle extends PCircle {
 			int solid[] = new int[height];
 			int shadows[] = new int[height];
 			for(int y = 0; y < height; y ++)
-				solid[y] = ((World)renderable).getPixel(point.getX() + camera.getX(), y - camera.getY());
+				solid[y] = ((World)renderable).getPixel(point.getX() + camera.getX(), y - realCamera.getY());
 				
 			Generator.generateShadowColumn(solid, shadows);
 			
 			for(int y = 0; y < shadows.length; y ++)
-				((World)renderable).setShadowPixel(point.getX() + camera.getX(), y - camera.getY(), shadows[y]);
+				((World)renderable).setShadowPixel(point.getX() + camera.getX(), y - realCamera.getY(), shadows[y]);
 			
 		}
 	}
 	
 	// Render object on top of renderable with random colors
-	public void render(PRenderable renderable, PCamera camera, int[] colors, boolean overwritePixels, int mask) {
+	public void render(PRenderable renderable, Camera realCamera, PCamera camera, int[] colors, boolean overwritePixels, int mask) {
 		
 		for(PPoint point : getPoints()) {
 			
@@ -49,17 +50,17 @@ public class Circle extends PCircle {
 				renderable.setPixel(point.getX() + camera.getX(), point.getY() + camera.getY(), colors[new Random().nextInt(colors.length)]);
 			else if(renderable.getPixel(point.getX() + camera.getX(), point.getY() + camera.getY()) == mask)
 				renderable.setPixel(point.getX() + camera.getX(), point.getY() + camera.getY(), colors[new Random().nextInt(colors.length)]);
-			
+			System.out.println(camera.getY());
 			int height = World.REGION_HEIGHT;
 			int solid[] = new int[height];
 			int shadows[] = new int[height];
 			for(int y = 0; y < height; y ++)
-				solid[y] = ((World)renderable).getPixel(point.getX() + camera.getX(), y);
+				solid[y] = ((World)renderable).getPixel(point.getX() + camera.getX(), y - realCamera.getY());
 				
 			Generator.generateShadowColumn(solid, shadows);
 			
 			for(int y = 0; y < shadows.length; y ++)
-				((World)renderable).setShadowPixel(point.getX() + camera.getX(), y, shadows[y]);
+				((World)renderable).setShadowPixel(point.getX() + camera.getX(), y - realCamera.getY(), shadows[y]);
 			
 		}
 			
