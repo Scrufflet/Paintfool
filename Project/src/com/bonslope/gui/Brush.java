@@ -65,6 +65,8 @@ public class Brush implements PCActionMouseMotion, PCActionMouse {
 		else if(buttonDown == BUTTON_RIGHT) // Destroy
 			filledBrush.render(world, camera, new PCamera(point.getX() - brush.getRadius(), point.getY() - brush.getRadius()), Pixel.PIXEL_AIR.getFirstColor(), true, 0);
 		
+		
+		
 	}
 	
 	public void render(PRenderable renderable) {

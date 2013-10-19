@@ -14,7 +14,7 @@ public class Workspace extends PWorkspace {
 	// Game settings
 	public static final int GAME_SETTING_SURVIVAL = 0, GAME_SETTING_ARTIST = 1;
 	public static int GAME_SETTING = Workspace.GAME_SETTING_ARTIST;
-	public static Seed GAME_SEED = new Seed(new Random().nextDouble() + "");
+	public static Seed GAME_SEED = new Seed(Math.PI + "");
 	
 	public World world;
 	private Camera camera;
